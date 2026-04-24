@@ -1,0 +1,100 @@
+--Examples of Create Statements
+
+Create Database Movies
+
+use database Movies
+
+CREATE TABLE Director
+
+(
+	director_id int PRIMARY KEY,
+	director nvarchar(50) NOT NULL	
+)
+
+
+CREATE TABLE Movie
+
+(
+	movie_id int PRIMARY KEY,
+	director_id int Foreign Key references Director(director_id),
+	title nvarchar(200) NOT NULL,
+	budget money NOT NULL,
+	homepage nvarchar(150) NULL,
+	overview varchar(max) NOT NULL,
+	popularity float NOT NULL,
+	release_date date NOT NULL,
+	revenue money NOT NULL,
+	runtime int NOT NULL,
+	movie_status nvarchar(50) NOT NULL,
+	vote_average decimal (5,2) NOT NULL,
+	vote_count int NOT NULL,
+)
+
+
+CREATE TABLE ActorDetails
+
+(
+	actor_id int PRIMARY KEY,
+	Actor nvarchar(150),
+	gender nvarchar(50) NULL
+
+	
+)
+
+CREATE TABLE Character
+
+(
+	character_name nvarchar (MAX)NULL,
+	movie_id int Foreign Key references Movie(movie_id),
+	actor_id int Foreign Key references ActorDetails(actor_id),
+	cast_order int NULL
+
+)
+
+CREATE TABLE Country
+
+(
+	country_iso_code nvarchar (50) PRIMARY KEY,
+	Country nvarchar(50) NOT NULL
+)
+
+
+--Bridging table
+
+CREATE TABLE CountryCode 
+
+(
+	movie_id int Foreign Key references Movie(movie_id),
+	country_iso_code nvarchar (50) Foreign Key references country(country_iso_code)
+)
+
+CREATE TABLE Genre
+
+(
+	genre_id int PRIMARY KEY,
+	genre_name nvarchar (50) NOT NULL
+)
+
+--Bridging Table
+
+CREATE TABLE GenreMovie
+
+(
+	movie_id int Foreign Key references Movie(movie_id),
+	genre_id int Foreign Key references Genre(genre_id)
+) 
+
+CREATE TABLE Languages
+
+(
+	movie_id int Foreign Key references Movie(movie_id),
+	language_name varchar(max) NULL,
+	language_role varchar(max) NOT NULL
+) 
+
+CREATE TABLE MovieProduction
+
+(
+	movie_id int Foreign Key references Movie(movie_id),
+	company_name nvarchar(100) NOT NULL
+)

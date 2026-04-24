@@ -1,0 +1,120 @@
+--Select List
+
+select
+title,
+budget,
+release_date,
+revenue
+from
+Movie
+
+
+
+--Inner Join 3 Tables ActorDetails, Director,DirectorMovie
+
+select 
+actor,
+character_name,
+title,
+director_name
+from
+ActorDetails
+left join 
+Character
+on 
+Character.actor_id = ActorDetails.actor_id
+left join 
+Movie
+on Movie.movie_id = Character.movie_id
+left join 
+Director
+on
+Director.director_id = Movie.director_id
+left join
+DirectorMovie
+on 
+Movie.movie_id = DirectorMovie.movie_id
+
+--Replace Null values in homepage column with 'Not Available'
+
+select
+title,
+ISNULL(homepage, 'Not Available')as Homepage,
+budget,
+revenue
+from
+Movie
+
+--Sort characters by actor then character_name
+
+select
+actor,
+character_name,
+title
+from
+ActorDetails
+left join
+Character
+on Character.actor_id =ActorDetails.actor_id
+left join
+Movie
+on Movie.movie_id = Character.movie_id
+order by 
+actor,character_name
+
+-- Add a column that gives gross profit of films for each director in descending order.
+
+select
+director_name,
+title,
+revenue - budget as Profit
+from 
+Movie
+join
+DirectorMovie
+on 
+DirectorMovie.movie_id = Movie.movie_id
+join
+Director
+on 
+DirectorMovie.movie_id = Director.director_id
+order by Profit desc
+
+--Inserting data to Director table
+
+INSERT INTO Director (director_id, director_name) 
+VALUES
+('1576','John Carpenter'),
+('1577','Sofia Coppola'),
+('1578','John Waters')
+
+--Updating data in Movies table
+
+UPDATE Movie
+SET Release_Date = '01/01/1999', 
+movie_status = 'Released'
+WHERE movie_id='5'
+
+
+--Updating data in Character table
+
+UPDATE Character
+SET
+cast_order = 3,
+character_name = 'Ted the Waiter'
+WHERE actor_id = 1
+
+
+
+--Deleting data in Movie
+
+DELETE FROM Movie 
+WHERE movie_id='125'
+
+-- Create an unclustered index on Movie table.
+
+CREATE INDEX idx_MovieTitle
+ON Movie (title);
+
+
+
