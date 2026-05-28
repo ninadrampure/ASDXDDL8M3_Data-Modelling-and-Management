@@ -1,0 +1,151 @@
+use SportsInjuryClinic
+
+--Task 1
+
+select *
+from Patient
+where Smoker = 'yes'
+order by Surname
+
+--Task 2
+
+select * 
+from Doctor
+where Salary > 29999.99
+
+--Task 3
+
+select * 
+from Appointment
+where TreatmentCode = 'phy' and AppointmentDate = '2013/06/25' 
+or TreatmentCode = 'mas' and AppointmentDate = '2013/06/25'
+
+--Task 4
+
+select Forename,Surname,AppointmentCode,AppointmentDate,
+	PatientNo,InjuryCode,TreatmentCode
+from Doctor D
+Inner Join Appointment A
+on D.StaffNo=A.StaffNo
+where D.StaffNo='A1' and A.StaffNo='A1'
+
+--Task 5
+
+Select Forename,Surname,Salary,Salary * 1.05 as 'New_Salary',
+	(salary * 1.05)-Salary as 'Increase'
+from doctor
+
+--Task 6
+
+select AppointmentDate,D.forename,D.Surname,InjuryCode,TreatmentCode
+from Appointment A
+Inner join Doctor D
+on A.StaffNo=D.StaffNo
+where TreatmentCode='pkl' or TreatmentCode='pla'
+order by AppointmentDate,D.Forename
+
+--Task 7
+
+select AppointmentDate,Forename,Surname,InjuryDescription,T.TreatmentCode
+from Appointment A
+Inner join Doctor D
+on A.StaffNo=D.StaffNo
+Inner Join Treatment T
+On A.TreatmentCode=T.TreatmentCode
+inner join injury I
+On A.InjuryCode=I.InjuryCode
+Where InjuryDescription like 'Broken%'
+
+--Task 8
+
+select AppointmentDate, COUNT (AppointmentDate) as Number_of_Patients
+from Appointment
+group by AppointmentDate
+
+--Adjusting Tables
+
+--Update Existing Record
+
+UPDATE Doctor
+SET Surname = 'Jones', Salary= 30000
+WHERE StaffNo= 'A3'
+
+--Delete Single Record
+
+DELETE FROM Appointment WHERE AppointmentCode= 1;
+
+
+DELETE FROM Doctor WHERE StaffNo= 'C3';
+
+--Insert New Record
+
+INSERT INTO doctor (StaffNo,Forename,Surname,Salary) 
+VALUES('C1','Summer','Rain',41000.00)
+
+--changing ref integrity
+
+--this will overide the default No Action  and allow records to be deleted.
+
+ALTER TABLE appointment
+ADD FOREIGN KEY (StaffNo) 
+REFERENCES Doctor(StaffNo)
+ON DELETE CASCADE;
+ON UPDATE SET NULL;
+
+ALTER TABLE appointment
+ADD FOREIGN KEY (StaffNo) 
+REFERENCES Doctor(StaffNo)
+ON DELETE NO ACTION
+ON UPDATE SET NULL;
+
+--Remove a foriegn key constraint
+--ALTER TABLE appointment
+--NOCHECK CONSTRAINT StaffNo;  
+--GO  
+--Creating a View
+
+
+
+CREATE VIEW Injuries_Broken as
+
+select AppointmentDate,Forename,Surname,InjuryDescription,T.TreatmentCode
+from Appointment as A
+Inner join Doctor as D
+on A.StaffNo=D.StaffNo
+Inner Join Treatment as T
+On A.TreatmentCode=T.TreatmentCode
+inner join injury as I
+On A.InjuryCode=I.InjuryCode
+Where InjuryDescription like 'Broken%'
+
+go
+
+--Creating a Stored Procedure (SP)
+
+go
+CREATE PROCEDURE PatientReport
+AS
+Select 'Dr.' + D.surname as 'DOCTOR.surname', 
+P.surname as 
+'PATIENT.surname' , p.forename, appointmentdate
+From Appointment A
+Inner join Doctor D
+On A.StaffNo=D.StaffNo
+Inner join Patient P
+On A.PatientNo=P.PatientNo
+Order by D.Surname,P.Surname,AppointmentDate desc
+
+GO;
+
+EXEC PatientReport
+
+--Creating an Index on the Patient table
+
+CREATE INDEX idx_pname
+ON Patient (surname, forename);
+
+--Droping an index
+
+DROP INDEX patient.idx_pname;
+
+
