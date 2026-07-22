@@ -1,0 +1,61 @@
+
+
+--Inserting data to doctor table
+
+INSERT INTO doctor (StaffNo,Forename,Surname,Salary) 
+VALUES('A1','Harry','Sinclair',40000.00),
+    ('A2','Mohammed','Rasul',30000.00),
+    ('A3','Brenda','Taylor',25000.00),
+    ('B1','Stuart','McNab',35000.00),
+    ('B2','Julia','Ng',38000.00)
+
+--Inserting data to patient table
+
+INSERT INTO patient (PatientNo,Forename,Surname,Smoker) 
+VALUES('BC021','Ben','Croft','No'),
+    ('JG001','Jack','Green','Yes'),
+    ('JS076','Jill','Strang','No'),
+    ('MM010','Mary','Miller','Yes'),
+    ('MM011','Murdo','McTavish','No'),
+    ('SR017','Sally','Rose','No'),
+    ('WM002','Bill','McGrory','Yes'),
+    ('WM004','Wendy','Miller','No')
+
+--Inserting data to Injury table
+
+INSERT INTO Injury (InjuryCode,InjuryDescription) 
+VALUES('BA','Broken Arm'),
+    ('BL','Broken Leg'),
+    ('BN','Broken Nose'),
+    ('FS','Frozen Shoulder'),
+    ('SA','Sprained Ankle'),
+    ('TE','Tennis Elbow')
+
+--Inserting data to Treatment table
+
+INSERT INTO Treatment (TreatmentCode,TreatmentDescription,CostPerVisit) 
+VALUES('MAS','Massage',30.00),
+    ('PHY','Physiotherapy',40.00),
+    ('PKL','Painkillers',15.00),
+    ('PLA','Plaster',25.00)
+
+--Inserting data to Appointment table
+
+INSERT INTO Appointment (AppointmentCode,AppointmentDate,StaffNo,PatientNo,InjuryCode,TreatmentCode) 
+VALUES(1,'2013/06/24','B1','WM004','TE','MAS'),
+    (2,'2013/06/24','A2','SR017','SA','PKL'),
+    (3,'2013/06/26','A1','JS076','BA','PKL'),
+    (4,'2013/06/26','B2','MM011','BL','PLA'),
+    (5,'2013/06/24','A1','JS076','BA','PLA'),
+    (6,'2013/06/25','A1','SR017','BA','PLA'),
+    (7,'2013/06/25','A2','JG001','FS','MAS'),
+    (8,'2013/06/25','A3','SR017','SA','PHY'),
+    (9,'2013/06/25','B2','WM002','TE','PHY'),
+    (10,'2013/06/25','A3','WM004','FS','PKL'),
+    (11,'2013/06/26','B1','BC021','BN','PKL'),
+    (12,'2013/06/26','A2','MM011','BL','PHY'),
+    (13,'2013/06/26','B2','MM010','TE','PKL'),
+    (14,'2013/06/26','A1','WM002','BN','PKL'),
+    (15,'2013/06/26','A1','JS076','BL','PLA'),
+    (16,'2013/06/26','A3','SR017','BA','PLA')
+
