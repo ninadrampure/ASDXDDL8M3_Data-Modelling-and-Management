@@ -1,0 +1,67 @@
+
+
+create database SportsInjuryClinic
+
+
+USE SportsInjuryClinic
+
+--CREATE TABLE Doctor
+CREATE TABLE Doctor
+(
+    StaffNo char(2) Primary Key,
+    Forename varchar(20) NOT NULL,
+    Surname varchar(20) NOT NULL,
+    Salary decimal, check (salary>=10000 and salary<=100000)
+)
+
+
+--CONSTRAINT CHK_Doctor CHECK (salary>=10000 and salary<=100000);
+
+--ALTER TABLE Doctors DROP CONSTRAINT CHK_Doctor;
+
+--ALTER TABLE Doctors ADD CHECK (salary>=12000 and salary<=110000);
+
+--ALTER TABLE Doctors ADD CONSTRAINT CHK_Doctor CHECK (salary>=12000 and salary<=110000);
+
+--CREATE TABLE Patient
+
+CREATE TABLE Patient
+(
+    PatientNo char(5) Primary Key,
+    Forename varchar(20) NOT NULL,
+    Surname varchar(20) NOT NULL,
+    Smoker char(3)
+)
+
+--CREATE TABLE Injury
+
+CREATE TABLE Injury
+(
+    InjuryCode char(2) Primary Key,
+    InjuryDescription varchar(50) NOT NULL,
+)
+
+--CREATE TABLE Treatment
+
+CREATE TABLE Treatment
+(
+    TreatmentCode char(3) Primary Key,
+    TreatmentDescription varchar(50),
+    CostPerVisit decimal, check(CostPerVisit>=10 and CostPerVisit<=200)
+)
+
+
+
+--CREATE TABLE Appointment
+
+CREATE TABLE Appointment
+(
+    AppointmentCode numeric Primary Key,
+    AppointmentDate Date,
+    StaffNo char(2) Foreign Key references Doctor(StaffNo),
+    PatientNo char(5) Foreign Key references Patient(PatientNo),
+    InjuryCode char(2) Foreign Key references Injury(InjuryCode),
+    TreatmentCode char(3) Foreign Key references Treatment(TreatmentCode),
+)
+
+
